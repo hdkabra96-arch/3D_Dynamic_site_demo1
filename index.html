@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GlowNest Beauty</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Scroll progress -->
+  <div id="scroll-progress"></div>
+  <!-- Custom cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+  <!-- Canvas Background -->
+  <canvas id="bg-canvas"></canvas>
+  <!-- Aurora overlay -->
+  <div id="aurora-overlay"></div>
+  <!-- Mouse sparkle canvas -->
+  <canvas id="sparkle-canvas"></canvas>
+
+  <!-- Navbar -->
+  <nav id="navbar">
+    <div class="nav-logo">GlowNest</div>
+    <ul class="nav-links">
+      <li><a href="#" data-page="home" class="nav-link active">Home</a></li>
+      <li><a href="#" data-page="shop" class="nav-link">Shop</a></li>
+      <li><a href="#" data-page="about" class="nav-link">About</a></li>
+      <li><a href="#" data-page="contact" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="cart-btn" id="cart-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+      <a href="admin/admin.html" class="admin-link" title="Admin Panel">⚙</a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Drawer -->
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="#" data-page="home" class="nav-link active">Home</a>
+    <a href="#" data-page="shop" class="nav-link">Shop</a>
+    <a href="#" data-page="about" class="nav-link">About</a>
+    <a href="#" data-page="contact" class="nav-link">Contact</a>
+    <div class="nav-drawer-footer">
+      <a href="admin/admin.html" style="font-size:0.8rem;color:var(--text-light);letter-spacing:1px;">⚙ Admin</a>
+    </div>
+  </div>
+
+  <!-- Cart Sidebar -->
+  <div id="cart-sidebar" class="cart-sidebar">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button id="close-cart">✕</button>
+    </div>
+    <div id="cart-items" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-total">Total: $<span id="cart-total">0.00</span></div>
+      <button class="btn-primary checkout-btn">Checkout</button>
+    </div>
+  </div>
+  <div id="cart-overlay" class="cart-overlay"></div>
+
+  <!-- Pages -->
+  <div id="pages">
+
+    <!-- HOME PAGE -->
+    <div id="page-home" class="page active">
+      <section class="hero">
+        <div class="hero-content">
+          <p class="hero-eyebrow">Premium Skincare</p>
+          <h1 class="hero-title">Enhance Your<br/><em>Natural Glow</em></h1>
+          <p class="hero-sub">Crafted with nature's finest ingredients for radiant, luminous skin.</p>
+          <div class="hero-actions">
+            <button class="btn-primary" data-page="shop">Shop Now</button>
+            <button class="btn-ghost" data-page="about">Our Story</button>
+          </div>
+        </div>
+        <div class="hero-3d" id="hero-3d-container">
+          <canvas id="hero-canvas"></canvas>
+          <!-- Decorative glow rings -->
+          <div class="glow-ring glow-ring-1"></div>
+          <div class="glow-ring glow-ring-2"></div>
+          <div class="glow-ring glow-ring-3"></div>
+        </div>
+        <div class="hero-particles" id="hero-particles"></div>
+        <!-- Floating ingredient badges -->
+        <div class="ingredient-badge badge-1">🌹 Rose Extract</div>
+        <div class="ingredient-badge badge-2">💧 Hyaluronic Acid</div>
+        <div class="ingredient-badge badge-3">✨ Vitamin C</div>
+        <div class="ingredient-badge badge-4">🌿 Green Tea</div>
+      </section>
+
+      <!-- Wave divider -->
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" fill="rgba(255,255,255,0.5)"/>
+          <path d="M0,80 C360,20 720,120 1080,40 C1260,0 1380,80 1440,60 L1440,120 L0,120 Z" fill="rgba(252,228,236,0.4)"/>
+        </svg>
+      </div>
+
+      <section class="featured-section">
+        <div class="section-header">
+          <p class="section-eyebrow">Bestsellers</p>
+          <h2>Featured Products</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="products-grid" id="featured-grid"></div>
+      </section>
+
+      <section class="categories-section">
+        <div class="section-header">
+          <p class="section-eyebrow">Explore</p>
+          <h2>Shop by Category</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="categories-grid">
+          <div class="category-card" data-category="Skincare">
+            <div class="category-icon-wrap"><div class="category-icon">✨</div></div>
+            <h3>Skincare</h3>
+            <p>Serums, moisturizers & more</p>
+            <div class="category-arrow">→</div>
+          </div>
+          <div class="category-card" data-category="Makeup">
+            <div class="category-icon-wrap"><div class="category-icon">💄</div></div>
+            <h3>Makeup</h3>
+            <p>Foundations, lips & eyes</p>
+            <div class="category-arrow">→</div>
+          </div>
+          <div class="category-card" data-category="Haircare">
+            <div class="category-icon-wrap"><div class="category-icon">🌿</div></div>
+            <h3>Haircare</h3>
+            <p>Oils, masks & treatments</p>
+            <div class="category-arrow">→</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Marquee strip -->
+      <div class="marquee-strip">
+        <div class="marquee-track">
+          <span>✦ Rose Extract</span><span>✦ Vitamin C</span><span>✦ Hyaluronic Acid</span>
+          <span>✦ Retinol</span><span>✦ Niacinamide</span><span>✦ Ceramides</span>
+          <span>✦ Green Tea</span><span>✦ Peptides</span><span>✦ Argan Oil</span>
+          <span>✦ Rose Extract</span><span>✦ Vitamin C</span><span>✦ Hyaluronic Acid</span>
+          <span>✦ Retinol</span><span>✦ Niacinamide</span><span>✦ Ceramides</span>
+          <span>✦ Green Tea</span><span>✦ Peptides</span><span>✦ Argan Oil</span>
+        </div>
+      </div>
+
+      <section class="testimonials-section">
+        <div class="section-header">
+          <p class="section-eyebrow">Reviews</p>
+          <h2>What Our Customers Say</h2>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>"My skin has never looked better. The Rose Glow Serum is absolutely magical."</p>
+            <div class="reviewer">— Sofia M.</div>
+          </div>
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>"GlowNest products feel so luxurious. Worth every penny for the results."</p>
+            <div class="reviewer">— Aria K.</div>
+          </div>
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>"The packaging is stunning and the formula is even better. Obsessed."</p>
+            <div class="reviewer">— Lena R.</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- SHOP PAGE -->
+    <div id="page-shop" class="page">
+      <div class="shop-hero">
+        <canvas id="shop-hero-canvas"></canvas>
+        <div class="shop-hero-content">
+          <h1>The Collection</h1>
+          <p>Discover beauty, redefined.</p>
+        </div>
+      </div>
+      <div class="shop-layout">
+        <aside class="shop-filters">
+          <h3>Filter</h3>
+          <div class="filter-group">
+            <label>Category</label>
+            <select id="filter-category">
+              <option value="all">All</option>
+              <option value="Skincare">Skincare</option>
+              <option value="Makeup">Makeup</option>
+              <option value="Haircare">Haircare</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Max Price: $<span id="price-val">200</span></label>
+            <input type="range" id="filter-price" min="10" max="200" value="200" />
+          </div>
+          <div class="filter-group">
+            <label>Min Rating</label>
+            <select id="filter-rating">
+              <option value="0">Any</option>
+              <option value="4">4+ Stars</option>
+              <option value="4.5">4.5+ Stars</option>
+            </select>
+          </div>
+        </aside>
+        <div class="shop-grid" id="shop-grid"></div>
+      </div>
+    </div>
+
+    <!-- PRODUCT DETAIL PAGE -->
+    <div id="page-product" class="page">
+      <button class="back-btn" id="back-btn">← Back to Shop</button>
+      <div class="product-detail-layout">
+        <div class="product-3d-view">
+          <canvas id="product-canvas"></canvas>
+          <div class="product-controls">
+            <span>Drag to rotate · Scroll to zoom</span>
+          </div>
+        </div>
+        <div class="product-info-panel" id="product-info-panel"></div>
+      </div>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="page-about" class="page">
+      <div class="about-hero">
+        <canvas id="about-canvas"></canvas>
+        <div class="about-hero-content">
+          <p class="section-eyebrow">Our Story</p>
+          <h1>Born from Nature,<br/><em>Crafted for You</em></h1>
+        </div>
+      </div>
+      <div class="about-sections">
+        <div class="about-block reveal">
+          <div class="about-text">
+            <h2>The Beginning</h2>
+            <p>GlowNest was founded in 2018 by two sisters who believed that luxury skincare shouldn't come at the cost of the planet. Every formula starts with sustainably sourced botanicals and ends with a product that truly transforms skin.</p>
+          </div>
+          <div class="about-visual">
+            <div class="floating-orb orb-1"></div>
+            <div class="floating-orb orb-2"></div>
+          </div>
+        </div>
+        <div class="about-block reveal reverse">
+          <div class="about-text">
+            <h2>Our Philosophy</h2>
+            <p>We believe beauty is a ritual, not a routine. Each GlowNest product is formulated to deliver visible results while honoring your skin's natural balance. Clean ingredients, zero compromise.</p>
+          </div>
+          <div class="about-visual">
+            <div class="ingredient-grid">
+              <div class="ingredient">🌹 Rose Extract</div>
+              <div class="ingredient">🌿 Green Tea</div>
+              <div class="ingredient">✨ Vitamin C</div>
+              <div class="ingredient">💧 Hyaluronic Acid</div>
+            </div>
+          </div>
+        </div>
+        <div class="about-stats">
+          <div class="stat"><span class="stat-num">50K+</span><span>Happy Customers</span></div>
+          <div class="stat"><span class="stat-num">100%</span><span>Clean Ingredients</span></div>
+          <div class="stat"><span class="stat-num">30+</span><span>Products</span></div>
+          <div class="stat"><span class="stat-num">8</span><span>Years of Glow</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="page-contact" class="page">
+      <div class="contact-layout">
+        <div class="contact-info">
+          <p class="section-eyebrow">Get in Touch</p>
+          <h1>We'd Love to<br/><em>Hear From You</em></h1>
+          <p class="contact-desc">Have a question about a product or your order? Our team is here to help.</p>
+          <div class="social-icons">
+            <a href="#" class="social-icon" title="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+            </a>
+            <a href="#" class="social-icon" title="TikTok">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>
+            </a>
+            <a href="#" class="social-icon" title="Pinterest">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.18-.77 1.22-5.17 1.22-5.17s-.31-.62-.31-1.54c0-1.45.84-2.53 1.88-2.53.89 0 1.32.67 1.32 1.47 0 .9-.57 2.24-.87 3.48-.25 1.04.52 1.88 1.54 1.88 1.85 0 3.27-1.95 3.27-4.77 0-2.49-1.79-4.23-4.35-4.23-2.96 0-4.7 2.22-4.7 4.51 0 .89.34 1.85.77 2.37.08.1.09.19.07.29-.08.32-.25 1.04-.28 1.18-.04.19-.14.23-.32.14-1.25-.58-2.03-2.42-2.03-3.89 0-3.15 2.29-6.05 6.61-6.05 3.47 0 6.16 2.47 6.16 5.77 0 3.44-2.17 6.21-5.18 6.21-1.01 0-1.96-.53-2.29-1.15l-.62 2.33c-.22.86-.83 1.94-1.24 2.6.94.29 1.93.45 2.96.45 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="contact-form-panel glass-panel">
+          <form id="contact-form">
+            <div class="form-group">
+              <input type="text" id="name" placeholder="Your Name" required />
+              <label for="name">Your Name</label>
+            </div>
+            <div class="form-group">
+              <input type="email" id="email" placeholder="Email Address" required />
+              <label for="email">Email Address</label>
+            </div>
+            <div class="form-group">
+              <input type="text" id="subject" placeholder="Subject" />
+              <label for="subject">Subject</label>
+            </div>
+            <div class="form-group">
+              <textarea id="message" placeholder="Your message..." rows="5" required></textarea>
+              <label for="message">Message</label>
+            </div>
+            <button type="submit" class="btn-primary full-width">Send Message</button>
+            <div id="form-success" class="form-success hidden">✓ Message sent! We'll be in touch soon.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
